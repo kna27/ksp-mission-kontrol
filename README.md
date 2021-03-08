@@ -5,7 +5,7 @@
 This is a Kerbal Space Program plugin that:
 
 1. Exports telemetry data (altitude, velocity, etc.) from your craft to a .csv file
-2. Creates charts in a webpage for you to view, like a real-life mission control
+2. Creates charts in a webpage (based on the data from the csv file) for you to view, like a real-life mission control
 
 This mod allows you to roleplay Mission Control at real launches. You can have the webpage on another screen, or even another device, as the webpage is hosted on your IP. Any device on the same network can connect and view the webpage.
 
@@ -17,7 +17,7 @@ As such, do not report any bugs. I know that there are a lot,  and I am getting 
 
 ## Installation
 This mod only works on Windows.
-1. Install [nodejs](https://nodejs.org/en/download/), any recent version should be fine.
+1. Install [nodejs](https://nodejs.org/en/download/) (32 or 64 bit are fine), any recent version should be fine.
 2. Download the GameData/KSPMissionKontrol folder.
 3. Copy the KSPMissionKontrol folder to `YourKSPInstallDirectory/Kerbal Space Program/GameData`
  
