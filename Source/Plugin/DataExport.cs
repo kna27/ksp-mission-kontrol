@@ -9,8 +9,8 @@ namespace KSPMissionControl
     public class DataExport : MonoBehaviour
     {
         public static string appPath = Application.dataPath;
-        public static string CSVpath = @"/GameData/KSPMissionControl/data/data.csv";
-        public static string batPath = @"/GameData/KSPMissionControl/makeServer.bat";
+        public static string CSVpath = @"/GameData/KSPMissionKontrol/data/data.csv";
+        public static string batPath = @"/GameData/KSPMissionKontrol/makeServer.bat";
         public int lineCount = 0;
         public static float waitTime = 1f;
         public static int maxData = 20;

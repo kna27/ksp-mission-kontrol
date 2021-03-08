@@ -37,7 +37,7 @@ namespace KSPMissionControl
         {
             if (showGUI)
             {
-                windowRect = GUI.Window(0, windowRect, MakeWindow, "KSP Mission Control");
+                windowRect = GUI.Window(0, windowRect, MakeWindow, "KSP Mission Kontrol");
             }
         }
 
@@ -57,29 +57,29 @@ namespace KSPMissionControl
                 Debug.Log("auto");
             } */
             GUI.Box(new Rect(buttonRect.x - 25, buttonRect.y + 85, buttonRect.width + 50, buttonRect.height), "Log Rate");
+            /*
             if (GUI.Button(new Rect(inpButtons.x - 25, inpButtons.y + 110, inpButtons.width, inpButtons.height), "-"))
             {
                 DataExport.waitTime -= 1f;
-                Debug.Log("logRate-");
             }
             if (GUI.Button(new Rect(inpButtons.x + 55, inpButtons.y + 110, inpButtons.width, inpButtons.height), "+"))
             {
                 DataExport.waitTime += 1f;
-                Debug.Log("logRate+");
             }
+            */
             logRate = GUI.TextField(new Rect(inptRect.x, inptRect.y + 110, inptRect.width, inptRect.height), logRate, 3);
 
             GUI.Box(new Rect(buttonRect.x - 25, buttonRect.y + 135, buttonRect.width + 50, buttonRect.height), "Max Data");
+            /*
             if (GUI.Button(new Rect(inpButtons.x - 25, inpButtons.y + 160, inpButtons.width, inpButtons.height), "-"))
             {
                 DataExport.maxData -= 2;
-                Debug.Log("maxData-");
             }
             if (GUI.Button(new Rect(inpButtons.x + 55, inpButtons.y + 160, inpButtons.width, inpButtons.height), "+"))
             {
                 DataExport.maxData += 2;
-                Debug.Log("maxData+");
             }
+            */
             maxData = GUI.TextField(new Rect(inptRect.x, inptRect.y + 160, inptRect.width, inptRect.height), maxData, 3);
             logRate = Regex.Replace(logRate, "[^0-9]", "");
             maxData = Regex.Replace(maxData, "[^0-9]", "");
@@ -87,7 +87,7 @@ namespace KSPMissionControl
             DataExport.maxData = Int32.Parse(maxData);
             if (GUI.Button(new Rect(buttonRect.x, buttonRect.y + 200, buttonRect.width, buttonRect.height), "Help"))
             {
-                Debug.Log("help");
+                Application.OpenURL("https://github.com/kna27/ksp-mission-kontrol/wiki/How-To-Use");
             }
             GUI.DragWindow(new Rect(0, 0, 10000, 50000));
         }
