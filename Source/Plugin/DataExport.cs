@@ -11,18 +11,31 @@ namespace KSPMissionControl
         public static string appPath = Application.dataPath;
         public static string CSVpath = @"/GameData/KSPMissionKontrol/data/data.csv";
         public static string batPath = @"/GameData/KSPMissionKontrol/makeServer.bat";
+        public static string setupPath = @"/GameData/KSPMissionKontrol/setup.bat";
+        public static string dataPath = @"/GameData/KSPMissionKontrol/data";
         public int lineCount = 0;
         public static float waitTime = 1f;
         public static int maxData = 20;
         public static bool isLogging = true;
         private int lastLoggedTime = 0;
-        private static string IPA;
+        private static string serverURL;
 
         void Start()
         {
             appPath = appPath.Substring(0, appPath.Length - 13);
             CSVpath = appPath + CSVpath;
             batPath = appPath + batPath;
+            setupPath = appPath + setupPath;
+            dataPath = appPath + dataPath;
+            if (!Directory.Exists(dataPath))
+            {
+                Directory.CreateDirectory(dataPath);
+            }
+            if (!File.Exists(CSVpath))
+            {
+                File.Create(CSVpath);
+            }
+
             File.Delete(CSVpath);
             using (FileStream fs = File.Create(CSVpath));
             using (StreamWriter file = new StreamWriter(CSVpath, true))
@@ -43,18 +56,32 @@ namespace KSPMissionControl
                     IPAddress = Convert.ToString(IP);
                 }
             }
-            IPA = IPAddress;
-
+            serverURL = "http://" + IPAddress;
         }
 
         public static void OpenServer()
         {
-            System.Diagnostics.Process.Start(batPath);
-            Application.OpenURL("http://" + IPA);
+            if(Window.serverStatusText == "Open Server")
+            {
+                Application.OpenURL(serverURL);
+                System.Diagnostics.Process.Start(batPath);
+            }
+            else
+            {
+                System.Diagnostics.Process.Start(setupPath);
+            }
+
         }
         void FixedUpdate()
         {
-
+            if (!Directory.Exists(dataPath))
+            {
+                Directory.CreateDirectory(dataPath);
+            }
+            if (!File.Exists(CSVpath))
+            {
+                File.Create(CSVpath);
+            }
             if (isLogging)
             {
 

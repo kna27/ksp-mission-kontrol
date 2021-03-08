@@ -1,27 +1,34 @@
 ﻿using System.Text.RegularExpressions;
 using UnityEngine;
 using System;
+using System.IO;
 namespace KSPMissionControl
 {
     [KSPAddon(KSPAddon.Startup.Flight, false)]
     public class Window : MonoBehaviour
     {
-        public bool showGUI = true;
+        public bool showGUI = false;
         public Rect windowRect = new Rect(20, 20, 200, 250);
         public Rect buttonRect = new Rect(50, 25, 100, 22);
         public Rect inptRect = new Rect(75, 25, 50, 20);
         public Rect inpButtons = new Rect(75, 25, 20, 20);
         public string onText;
-        public string serverStatusText;
+        public static string serverStatusText;
         public string autoText;
         public string logRate;
         public string maxData;
+        private string expressDir = @"/GameData/KSPMissionKontrol/node_modules";
+        public static string appPath = Application.dataPath;
         void Start()
         {
+            appPath = appPath.Substring(0, appPath.Length - 13);
+            expressDir = appPath + expressDir;
+
             logRate = DataExport.waitTime.ToString();
             maxData = DataExport.maxData.ToString();
-            showGUI = true;
+            showGUI = false;
             onText = DataExport.isLogging == true ? "Turn Off" : "Turn On";
+            serverStatusText = Directory.Exists(expressDir) == true ? "Open Server" : "Initial Setup";
 
 
         }
@@ -31,13 +38,14 @@ namespace KSPMissionControl
             {
                 showGUI = !showGUI;
             }
+            serverStatusText = Directory.Exists(expressDir) == true ? "Open Server" : "Initial Setup";
         }
 
         void OnGUI()
         {
             if (showGUI)
             {
-                windowRect = GUI.Window(0, windowRect, MakeWindow, "KSP Mission Kontrol");
+                windowRect = GUI.Window(0, windowRect, MakeWindow, "Mission Kontrol");
             }
         }
 
@@ -48,7 +56,7 @@ namespace KSPMissionControl
                 DataExport.isLogging = !DataExport.isLogging;
                 onText = DataExport.isLogging == true ? "Turn Off" : "Turn On";
             }
-            if (GUI.Button(new Rect(buttonRect.x, buttonRect.y + 25, buttonRect.width, buttonRect.height), "Open Server"))
+            if (GUI.Button(new Rect(buttonRect.x, buttonRect.y + 25, buttonRect.width, buttonRect.height), serverStatusText))
             {
                 DataExport.OpenServer();
             } /*
