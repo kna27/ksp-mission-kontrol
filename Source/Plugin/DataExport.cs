@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using System.IO;
 using System.Net;
+
 namespace KSPMissionControl
 {
     [KSPAddon(KSPAddon.Startup.Flight, false)]
@@ -13,20 +14,31 @@ namespace KSPMissionControl
         public static string batPath = @"/GameData/KSPMissionKontrol/makeServer.bat";
         public static string setupPath = @"/GameData/KSPMissionKontrol/setup.bat";
         public static string dataPath = @"/GameData/KSPMissionKontrol/data";
+        public static string expressDir = @"/GameData/KSPMissionKontrol/node_modules";
         public int lineCount = 0;
         public static float waitTime = 1f;
         public static int maxData = 20;
         public static bool isLogging = true;
+        public static bool canLog;
+        public static bool correctVesselType;
+        public static bool hasControl = true;
         private int lastLoggedTime = 0;
         private static string serverURL;
+        public static Vessel actVess;
 
         void Start()
         {
-            appPath = appPath.Substring(0, appPath.Length - 13);
-            CSVpath = appPath + CSVpath;
-            batPath = appPath + batPath;
-            setupPath = appPath + setupPath;
-            dataPath = appPath + dataPath;
+            if (!EventsHolder.alreadyStarted)
+            {
+                appPath = appPath.Substring(0, appPath.Length - 13);
+                CSVpath = appPath + CSVpath;
+                batPath = appPath + batPath;
+                setupPath = appPath + setupPath;
+                dataPath = appPath + dataPath;
+                expressDir = appPath + expressDir;
+                EventsHolder.alreadyStarted = true;
+            }
+
             if (!Directory.Exists(dataPath))
             {
                 Directory.CreateDirectory(dataPath);
@@ -74,6 +86,9 @@ namespace KSPMissionControl
         }
         void FixedUpdate()
         {
+            actVess = FlightGlobals.ActiveVessel;
+            CheckCanLog();
+
             if (!Directory.Exists(dataPath))
             {
                 Directory.CreateDirectory(dataPath);
@@ -82,20 +97,20 @@ namespace KSPMissionControl
             {
                 File.Create(CSVpath);
             }
-            if (isLogging)
+            if (isLogging && canLog)
             {
 
 
-                if (Mathf.RoundToInt((float)FlightGlobals.ActiveVessel.missionTime) >= lastLoggedTime + waitTime)
+                if (Mathf.RoundToInt((float)actVess.missionTime) >= lastLoggedTime + waitTime)
                 {
                     AddData(
-                        Mathf.RoundToInt((float)FlightGlobals.ActiveVessel.missionTime),
-                        Mathf.RoundToInt((float)FlightGlobals.ActiveVessel.srf_velocity.magnitude),
-                        Mathf.RoundToInt((float)FlightGlobals.ActiveVessel.altitude),
+                        Mathf.RoundToInt((float)actVess.missionTime),
+                        Mathf.RoundToInt((float)actVess.srf_velocity.magnitude),
+                        Mathf.RoundToInt((float)actVess.altitude),
                         CSVpath,
                         lineCount,
                         maxData);
-                    lastLoggedTime = Mathf.RoundToInt((float)FlightGlobals.ActiveVessel.missionTime);
+                    lastLoggedTime = Mathf.RoundToInt((float)actVess.missionTime);
                 }
             }
 
@@ -132,6 +147,13 @@ namespace KSPMissionControl
                 throw new ApplicationException("Error: ", ex);
             }
 
+        }
+
+        public static void CheckCanLog()
+        {
+            correctVesselType = actVess.vesselType == VesselType.Base || actVess.vesselType == VesselType.Lander || actVess.vesselType == VesselType.Plane || actVess.vesselType == VesselType.Probe || actVess.vesselType == VesselType.Relay || actVess.vesselType == VesselType.Rover || actVess.vesselType == VesselType.Ship || actVess.vesselType == VesselType.Station;
+           // hasControl = check if vessel has a connection to the KSC;
+            canLog = correctVesselType && hasControl;
         }
     }
 }

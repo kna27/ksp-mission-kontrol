@@ -8,7 +8,7 @@ namespace KSPMissionControl
     public class Window : MonoBehaviour
     {
         public bool showGUI = false;
-        public Rect windowRect = new Rect(20, 20, 200, 250);
+        public Rect windowRect = new Rect(150, 100, 200, 250);
         public Rect buttonRect = new Rect(50, 25, 100, 22);
         public Rect inptRect = new Rect(75, 25, 50, 20);
         public Rect inpButtons = new Rect(75, 25, 20, 20);
@@ -17,18 +17,16 @@ namespace KSPMissionControl
         public string autoText;
         public string logRate;
         public string maxData;
-        private string expressDir = @"/GameData/KSPMissionKontrol/node_modules";
+        public string statusText;
+
         public static string appPath = Application.dataPath;
         void Start()
         {
-            appPath = appPath.Substring(0, appPath.Length - 13);
-            expressDir = appPath + expressDir;
-
             logRate = DataExport.waitTime.ToString();
             maxData = DataExport.maxData.ToString();
             showGUI = false;
             onText = DataExport.isLogging == true ? "Turn Off" : "Turn On";
-            serverStatusText = Directory.Exists(expressDir) == true ? "Open Server" : "Initial Setup";
+            serverStatusText = Directory.Exists(DataExport.expressDir) == true ? "Open Server" : "Initial Setup";
 
 
         }
@@ -38,7 +36,9 @@ namespace KSPMissionControl
             {
                 showGUI = !showGUI;
             }
-            serverStatusText = Directory.Exists(expressDir) == true ? "Open Server" : "Initial Setup";
+            serverStatusText = Directory.Exists(DataExport.expressDir) == true ? "Open Server" : "Initial Setup";
+            statusText = DataExport.canLog == true ? "Status: Normal" : "Status: Cannot log";
+           
         }
 
         void OnGUI()
@@ -93,7 +93,8 @@ namespace KSPMissionControl
             maxData = Regex.Replace(maxData, "[^0-9]", "");
             DataExport.waitTime = Int32.Parse(logRate);
             DataExport.maxData = Int32.Parse(maxData);
-            if (GUI.Button(new Rect(buttonRect.x, buttonRect.y + 200, buttonRect.width, buttonRect.height), "Help"))
+            GUI.Box(new Rect(buttonRect.x - 25, buttonRect.y + 200, buttonRect.width + 50, buttonRect.height), statusText);
+            if (GUI.Button(new Rect(buttonRect.x, buttonRect.y + 225, buttonRect.width, buttonRect.height), "Help"))
             {
                 Application.OpenURL("https://github.com/kna27/ksp-mission-kontrol/wiki/How-To-Use");
             }
