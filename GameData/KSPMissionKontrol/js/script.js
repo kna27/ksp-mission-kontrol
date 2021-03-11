@@ -1,4 +1,8 @@
 
+//Blue hex code: 4ab2f7
+//Green hex code: 03fc03
+var backgroundColor = "#4ab2f7";
+var foregroundColor = "#ffffff";
 
 d3
  .csv("/data.csv")
@@ -10,7 +14,15 @@ function makeChart(data) {
       scales: {
         xAxes: [{
           display: false
-        }]   
+        }],
+        yAxes: [{
+          ticks: {
+            fontColor: backgroundColor
+          },
+          gridLines: {
+            color: backgroundColor
+          }
+        }]
     },
     responsive: false,
     animation: {
@@ -25,6 +37,12 @@ function makeChart(data) {
     }
   }, legend: {
     display: false
+},
+layout: {
+  padding: {
+    bottom: 20,
+    top: 20
+  }
 },
   events: ['click']
 
@@ -49,7 +67,9 @@ function makeChart(data) {
       labels: timeData,
       datasets: [
         {
-          data: velData
+          data: velData,
+          borderColor: foregroundColor,
+          fill: false
         }
       ]
     },
@@ -65,7 +85,9 @@ var altChart = new Chart(altChartCanvas, {
     labels: timeData,
     datasets: [
       {
-        data: altData
+        data: altData,
+        borderColor: foregroundColor,
+        fill: false
       }
     ]
   },

@@ -4,13 +4,58 @@
   <meta charset="UTF-8">
   <title>KSP Mission Kontrol</title>
   <link href="https://fonts.googleapis.com/css?family=Merriweather|Roboto" rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="style.css">
+  <link type="text/css" rel="stylesheet" href="/style.css">
 
 </head>
 <body>
+<header>
+      <nav>
+        <ul>
+          <li><a href = "index.html">OVERVIEW</a></li>
+          <li><a href = "ascent.html">ASCENT</a></li>
+          <li><a href = "orbit.html">ORBIT</a></li>
+          <li><a href = "docking.html">DOCKING</a></li>
+          <li><a href = "descent.html">DESCENT</a></li>
+          <li><a href = "resources.html">RESOURCES</a></li>
+          <li><a href = "settings.html">SETTINGS</a></li>
+        </ul>
+      </nav>
+    </header>
+<h1>Mission Kontrol</h1>
+<div class="elemGroup">
 <div id="wrapper">
-  <canvas id="velChart" width="500" height="300"></canvas>
+  <div id="chart-div">
+    <h2>VELOCITY</h2>
+    <canvas id="velChart" width="500" height="300"></canvas>
+  </div>
+  <div id="info-div">
+    <h2>RESOURCES</h2>
+    <h3>SAMPLE TEXT: <span>E</span></h3>
+    <h3>SAMPLE TEXT: <span>E</span></h3>
+    <h3>SAMPLE TEXT: <span>E</span></h3>
+    <h3>SAMPLE TEXT: <span>E</span></h3>
+  </div>
+  <div id="info-div">
+    <h2>VESSEL</h2>
+    <h3>DELTA-V: <span>E</span></h3>
+    <h3>TWR: <span>E</span></h3>
+    <h3>G-FORCE: <span>E</span></h3>
+    <h3>THROTTLE: <span>E</span></h3>
+    <h3>ACCELERATION: <span>E</span></h3>
+  </div>
+  <div id="info-div">
+    <h2>INFO</h2>
+    <h3>AP: <span>1000</span></h3>
+    <h3>PE: <span>1000</span></h3>
+    <h3>INC: <span>E</span></h3>
+    <h3>VEL: <span>E</span></h3>
+    <h3>ALT: <span>E</span></h3>
+  </div>
+</div>
+  <div id="chart-div" style="clear:both">
+    <h2>ALTITUDE</h2>
   <canvas id="altChart" width="500" height="300"></canvas>
+  </div>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
   <script src='/d3.min.js' type="text/javascript"></script>

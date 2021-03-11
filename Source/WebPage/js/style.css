@@ -1,0 +1,77 @@
+:root {
+  --foreground: #4ab2f7;
+}
+
+body {
+    background-color: rgb(30, 30, 30);
+}
+
+h1 {
+    color: var(--foreground);
+    text-align: center;
+    font-family: "Lucida Console";
+    font-weight: normal;
+}
+
+h2 {
+  color: var(--foreground);
+  text-align: center;
+  font-family: "Lucida Console";
+  font-weight: normal;
+}
+
+h3{
+  color: white;
+  text-align: left;
+  font-family: "Courier New";
+  font-weight: normal;
+}
+
+span{
+  color: var(--foreground);
+}
+
+#chart-div {
+  float: left;
+  
+}
+
+#info-div{
+  border: 2px solid white;
+  margin: 0px 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  float: right;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  color: black;
+  text-align: left;   
+}
+
+li {
+  display: inline-block;
+  margin: 0 20px 0 0;
+  font-size: 16px;
+  font-family: "Lucida Console";
+}
+
+header {
+  background: rgb(0, 51, 102);
+  padding: 10px;
+}
+
+a {
+  font-weight: 100; 
+  text-decoration: none;
+  color:whitesmoke;
+}
+
+canvas {
+  background: rgb(15, 15, 15);
+  border-radius: 15px;
+  margin: 20px 20px;
+}​
