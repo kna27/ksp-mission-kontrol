@@ -11,6 +11,7 @@ namespace KSPMissionControl
     {
         public static string appPath = Application.dataPath;
         public static string CSVpath = @"/GameData/KSPMissionKontrol/data/data.csv";
+        public static string allData = @"/GameData/KSPMissionKontrol/data/allData.csv";
         public static string batPath = @"/GameData/KSPMissionKontrol/makeServer.bat";
         public static string setupPath = @"/GameData/KSPMissionKontrol/setup.bat";
         public static string dataPath = @"/GameData/KSPMissionKontrol/data";
@@ -52,7 +53,7 @@ namespace KSPMissionControl
             using (FileStream fs = File.Create(CSVpath));
             using (StreamWriter file = new StreamWriter(CSVpath, true))
             {
-                file.WriteLine("Time,SurfaceVelocity,Altitude");
+                file.WriteLine("Time,SurfaceVelocity,Altitude,Apoapsis,Periapsis,Inclination,GForce,Acceleration");
             }
 
 
@@ -99,14 +100,17 @@ namespace KSPMissionControl
             }
             if (isLogging && canLog)
             {
-
-
                 if (Mathf.RoundToInt((float)actVess.missionTime) >= lastLoggedTime + waitTime)
                 {
                     AddData(
                         Mathf.RoundToInt((float)actVess.missionTime),
                         Mathf.RoundToInt((float)actVess.srf_velocity.magnitude),
-                        Mathf.RoundToInt((float)actVess.altitude),
+                        Math.Max(0, Mathf.RoundToInt((float)actVess.altitude)),
+                        Math.Max(0,Mathf.RoundToInt((float)actVess.orbit.ApA)),
+                        Math.Max(0, Mathf.RoundToInt((float)actVess.orbit.PeA)),
+                        Math.Round(FlightGlobals.ship_orbit.inclination, 2),
+                        Math.Round(actVess.geeForce, 2),
+                        Math.Round(actVess.acceleration.magnitude, 2),
                         CSVpath,
                         lineCount,
                         maxData);
@@ -121,6 +125,11 @@ namespace KSPMissionControl
             int elapsedTime,
             int srfVel,
             int altitude,
+            int apoapsis,
+            int periapsis,
+            double inclination,
+            double gForce,
+            double acceleration,
             string path,
             int lc,
             int maxData)
@@ -139,7 +148,7 @@ namespace KSPMissionControl
             {
                 using (StreamWriter file = new StreamWriter(path, true))
                 {
-                    file.WriteLine(elapsedTime + "," + srfVel + "," + altitude);
+                    file.WriteLine(elapsedTime + "," + srfVel + "," + altitude + "," + apoapsis + "," + periapsis + "," + inclination + "," + gForce + "," + acceleration);
                 }
             }
             catch (Exception ex)
