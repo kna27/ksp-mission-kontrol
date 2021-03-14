@@ -11,6 +11,12 @@ var incData;
 var gData;
 var accData;
 
+var years = 0;
+var days = 0;
+var hours = 0;
+var mins = 0;
+var secs = 0;
+
 var velChartCanvas = document.getElementById("velChart").getContext("2d")
 var altChartCanvas = document.getElementById("altChart").getContext("2d")
 
@@ -51,6 +57,13 @@ var options = {
   events: ['click']
 
 }
+
+function prependZero(number) { 
+  if (number < 9) 
+      return "0" + number; 
+  else 
+      return number; 
+} 
 
 function getData(data) {
   timeData = data.map(function (d) {
@@ -137,7 +150,8 @@ function updateDataFields(){
   document.getElementById('altField').innerHTML = altData[altData.length - 1]
   document.getElementById('gField').innerHTML = gData[gData.length - 1]
   document.getElementById('accField').innerHTML = accData[accData.length - 1]
-  document.getElementById('MET').innerHTML ="T+" + new Date(timeData[timeData.length-1] * 1000).toISOString().substr(11, 8) 
+
+  document.getElementById('MET').innerHTML ="T+" + years + "Y " + days + "D, " + prependZero(hours) + ":" + prependZero(mins) + ":" + prependZero(secs);
 }
 
 function updateChart() {
