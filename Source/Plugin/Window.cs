@@ -59,11 +59,12 @@ namespace KSPMissionControl
             if (GUI.Button(new Rect(buttonRect.x, buttonRect.y + 25, buttonRect.width, buttonRect.height), serverStatusText))
             {
                 DataExport.OpenServer();
-            } /*
-            if (GUI.Button(new Rect(buttonRect.x, buttonRect.y + 50, buttonRect.width, buttonRect.height), "Auto"))
+            } 
+            if (GUI.Button(new Rect(buttonRect.x, buttonRect.y + 50, buttonRect.width, buttonRect.height), "Open Website"))
             {
-                Debug.Log("auto");
-            } */
+                Application.OpenURL(DataExport.serverURL);
+                Debug.Log(DataExport.serverURL);
+            }
             GUI.Box(new Rect(buttonRect.x - 25, buttonRect.y + 85, buttonRect.width + 50, buttonRect.height), "Log Rate");
             /*
             if (GUI.Button(new Rect(inpButtons.x - 25, inpButtons.y + 110, inpButtons.width, inpButtons.height), "-"))

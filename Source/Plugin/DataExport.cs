@@ -11,6 +11,7 @@ namespace KSPMissionControl
     {
         public static string appPath = Application.dataPath;
         public static string CSVpath = @"/GameData/KSPMissionKontrol/data/data.csv";
+        public static string startData = @"/GameData/KSPMissionKontrol/data/startData.txt";
         public static string allData = @"/GameData/KSPMissionKontrol/data/allData.csv";
         public static string batPath = @"/GameData/KSPMissionKontrol/makeServer.bat";
         public static string setupPath = @"/GameData/KSPMissionKontrol/setup.bat";
@@ -24,7 +25,7 @@ namespace KSPMissionControl
         public static bool correctVesselType;
         public static bool hasControl = true;
         private int lastLoggedTime = 0;
-        private static string serverURL;
+        public static string serverURL;
         public static Vessel actVess;
 
         void Start()
@@ -37,6 +38,7 @@ namespace KSPMissionControl
                 setupPath = appPath + setupPath;
                 dataPath = appPath + dataPath;
                 expressDir = appPath + expressDir;
+                startData = appPath + startData;
                 EventsHolder.alreadyStarted = true;
             }
 
@@ -56,6 +58,16 @@ namespace KSPMissionControl
                 file.WriteLine("Time,SurfaceVelocity,Altitude,Apoapsis,Periapsis,Inclination,GForce,Acceleration");
             }
 
+            if (!File.Exists(startData))
+            {
+                File.Create(startData);
+            }
+            File.Delete(startData);
+            using (FileStream fs = File.Create(startData));
+            using (StreamWriter file = new StreamWriter(startData, true))
+            {
+                file.WriteLine(actVess.vesselName);
+            }
 
             string IPAddress = string.Empty;
             IPHostEntry Host = default(IPHostEntry);
@@ -69,6 +81,7 @@ namespace KSPMissionControl
                     IPAddress = Convert.ToString(IP);
                 }
             }
+            Debug.Log(serverURL);
             serverURL = "http://" + IPAddress;
         }
 
@@ -77,6 +90,7 @@ namespace KSPMissionControl
             if(Window.serverStatusText == "Open Server")
             {
                 Application.OpenURL(serverURL);
+                Debug.Log(serverURL);
                 System.Diagnostics.Process.Start(batPath);
             }
             else
@@ -102,6 +116,7 @@ namespace KSPMissionControl
             {
                 if (Mathf.RoundToInt((float)actVess.missionTime) >= lastLoggedTime + waitTime)
                 {
+                    VesselDeltaV e = VesselDeltaV.Create(actVess);
                     AddData(
                         Mathf.RoundToInt((float)actVess.missionTime),
                         Mathf.RoundToInt((float)actVess.srf_velocity.magnitude),
