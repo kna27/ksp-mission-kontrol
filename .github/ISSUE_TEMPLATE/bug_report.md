@@ -26,7 +26,8 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **For issues with webpage:**
- Mobile: 
+
+Mobile: 
 * Model of your phone/tablet
 * Which browser were you using?
 
