@@ -1,5 +1,7 @@
 # ksp-mission-kontrol
 
+# NOTE: THIS MOD'S DEVELOPMENT IS ON HOLD FOR A WHILE, WHEN I HAVE MORE TIME I WILL WORK ON THIS
+
 ## Introduction
 
 This is a Kerbal Space Program plugin that:
